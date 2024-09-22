@@ -1,23 +1,20 @@
 # 創建構建目錄
-$buildDir = "build"
-if (!(Test-Path -Path $buildDir)) {
-    New-Item -ItemType Directory -Force -Path $buildDir
-}
+New-Item -ItemType Directory -Force -Path "build"
+Set-Location "build"
 
-# 進入構建目錄
-Set-Location $buildDir
-
-# 運行 CMake
+# 運行 CMake 配置
 cmake ..
 
 # 構建項目
 cmake --build . --config Release
 
-# 返回到原目錄
+# 复制 DLL 到项目根目录
+Copy-Item "Release\example.dll" ".." -Force
+
+# 返回到项目根目录
 Set-Location ..
 
-# 複製 DLL 到當前目錄（如果需要）
-Copy-Item "$buildDir/bin/Release/example.dll" .
+Write-Host "Build completed. The DLL has been copied to the project root directory."
 
 # 指定 Anaconda Python 路徑
 $pythonPath = "D:\anaconda3\python.exe"

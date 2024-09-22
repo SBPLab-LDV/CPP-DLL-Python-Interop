@@ -5,6 +5,8 @@ This project demonstrates how to create a C++ DLL and use it in Python. It uses 
 ## Project Structure
 
 - `example.cpp`: C++ source code containing functions to be exported to DLL.
+- `math_operations.h`: Header file declaring math operations.
+- `math_operations.cpp`: C++ source code implementing math operations.
 - `use_example.py`: Python script demonstrating how to load and use the C++ DLL.
 - `CMakeLists.txt`: CMake configuration file for project building.
 - `build.ps1`: PowerShell script to automate the build and run process.
@@ -23,7 +25,7 @@ This project demonstrates how to create a C++ DLL and use it in Python. It uses 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/your-username/CPP-DLL-Python-Interop.git
+   git clone https://github.com/SBPLab-LDV/CPP-DLL-Python-Interop.git
    cd CPP-DLL-Python-Interop
    ```
 
@@ -56,12 +58,18 @@ If you prefer to compile manually using Clang++, follow these steps:
    cd path\to\CPP-DLL-Python-Interop
    ```
 
-3. Compile the DLL using Clang++:
+3. Compile the source files:
    ```
-   clang++ -shared -o example.dll example.cpp -luser32
+   clang++ -c -std=c++14 math_operations.cpp
+   clang++ -c -std=c++14 example.cpp
    ```
 
-4. Run the Python script to test the DLL:
+4. Link the object files and create the DLL:
+   ```
+   clang++ -shared -o example.dll math_operations.o example.o -luser32
+   ```
+
+5. Run the Python script to test the DLL:
    ```
    python use_example.py
    ```
@@ -76,6 +84,8 @@ If successful, you should see the output of the Python script, showing the resul
 - Ensure Visual Studio and CMake paths are added to the system's PATH environment variable.
 - If using Anaconda, make sure the Python path in `build.ps1` is correct.
 - For manual compilation, ensure Clang++ is properly installed and accessible from the command line.
+- When using Clang++ on Windows, you might need additional setup or use MSVC's library paths.
+- Depending on your Clang++ version and system configuration, you may need to adjust compilation options.
 
 ## Contributing
 

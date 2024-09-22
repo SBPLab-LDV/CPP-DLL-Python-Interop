@@ -1,24 +1,23 @@
 cmake_minimum_required(VERSION 3.10)
-project(CppDllExample)
+project(cpp_dll_project)
 
 # 設置 C++ 標準
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # 添加庫
-add_library(example SHARED example.cpp)
-
-# 如果需要，可以添加額外的包含目錄
-# include_directories(${CMAKE_SOURCE_DIR}/include)
-
-# 鏈接 Windows 庫
-if(WIN32)
-    target_link_libraries(example PRIVATE user32)
-endif()
-
-# 設置輸出目錄
-set_target_properties(example PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+add_library(example SHARED
+    example.cpp
+    math_operations.cpp
 )
+
+# 包含头文件目录
+target_include_directories(example PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+# 设置输出名称
+set_target_properties(example PROPERTIES OUTPUT_NAME "example")
+
+# 如果是 Windows，添加 WIN32 定义
+if(WIN32)
+    target_compile_definitions(example PRIVATE WIN32)
+endif()
