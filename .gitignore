@@ -1,0 +1,13 @@
+build/
+
+*.dll
+*.exp
+*.lib
+*.o
+*.exe
+*.pyc
+*.pyd
+*.pyx
+*.pxd
+*.pxi
+*.pxi
